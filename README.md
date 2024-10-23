@@ -105,3 +105,26 @@ reflects the combined logic.
 
 If the application runs successfully it will automatically create data.db database which stores the created rules.
 
+## Check working using curl commands :
+
+   1. Create first rule:
+       ```bash
+        curl -X POST http://127.0.0.1:5000/create_rule -H "Content-Type: application/json" -d '{"rule_string": "(age > 30 AND department = '''Sales''') OR (salary > 50000)"}'
+
+   2. Create Second rule:
+        ```bash
+         curl -X POST http://127.0.0.1:5000/create_rule -H "Content-Type: application/json" -d '{"rule_string": "experience > 5 AND department = '''Marketing'''"}'
+
+   3. Combine rules:
+      ```bash
+         curl -X POST http://127.0.0.1:5000/combine_rules -H "Content-Type: application/json" -d '{"rule_ids": [1, 2]}'
+
+   4. Evaluate Rule:
+      ```bash
+         bash curl -X POST http://127.0.0.1:5000/evaluate_rule -H "Content-Type: application/json" -d '{ "rule_id": 3, "data": { "age": 35, "department": "Sales", "salary": 60000, "experience": 6 } }'
+
+   5. Modify rule:
+        ```bash
+         curl -X POST http://127.0.0.1:5000/modify_rule -H "Content-Type: application/json" -d '{ "rule_id": 1, "new_rule_string": "age > 40 AND department = '''HR'''" }'
+
+
